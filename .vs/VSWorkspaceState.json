@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\skview_kepware_influx_service",
-    "\\skview_kepware_influx_service\\Controllers"
+    "\\skview_kepware_influx_service\\Controllers",
+    "\\skview_kepware_influx_service\\MqttFiles"
   ],
-  "SelectedNode": "\\skview_kepware_influx_service.sln",
+  "SelectedNode": "\\skview_kepware_influx_service\\MqttFiles\\MqttConnect.cs",
   "PreviewInSolutionExplorer": false
 }

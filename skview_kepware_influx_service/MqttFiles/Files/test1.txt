@@ -1,11 +1,35 @@
 {
-  "timestamp": "2023-08-11T18:50:28.316-06:00",
+  "timestamp": 1692398895138,
   "values": [
     {
-      "id": "Simulador.Device1.AleatorioTest",
-      "v": 1243,
+      "id": "PZR - Medicion.UCL-G-A-1.Proceso.LiquidStation_ObservedDensity_71_0",
+      "v": 845.140991,
       "q": true,
-      "t": 1691801428082
+      "t": 1692398894748
+    },
+    {
+      "id": "PZR - Medicion.UCL-G-A-1.Proceso.RTD_EUValue_106_96",
+      "v": 22.125,
+      "q": true,
+      "t": 1692398894748
+    },
+    {
+      "id": "PZR - Medicion.UCL-G-A-1.Proceso.Preset General_NetStdDelQtyBatch_63_0",
+      "v": 18279.2,
+      "q": true,
+      "t": 1692398894748
+    },
+    {
+      "id": "PZR - Medicion.UCL-G-A-1.Proceso.Analog_Inputs_EUValue_103_66",
+      "v": 34.3278809,
+      "q": true,
+      "t": 1692398894748
+    },
+    {
+      "id": "PZR - Medicion.UCL-G-A-1.Proceso.LiquidTurbine_IndicatedVolumeRate_73_0",
+      "v": 1330,
+      "q": true,
+      "t": 1692398894748
     }
   ]
 }

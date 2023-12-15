@@ -4292,7 +4292,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Imimex-D15-QRO\\.nuget\\packages\\": {}
+    "C:\\Users\\Imimex-D15-QRO\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4303,6 +4304,9 @@
       "packagesPath": "C:\\Users\\Imimex-D15-QRO\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Imimex-D15-QRO\\Documents\\Proyectos IMIMEX\\skview_kepware_influx\\skview_kepware_influx_service\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\Imimex-D15-QRO\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

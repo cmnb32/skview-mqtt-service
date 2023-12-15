@@ -27,29 +27,35 @@ namespace skview_kepware_influx_service.MqttFiles
 
             var options = new MqttClientOptionsBuilder()
                                 .WithClientId(Guid.NewGuid().ToString())
-                                .WithWebSocketServer("ws://localhost:9001")
+                                .WithWebSocketServer("ws://18.191.137.254:9001")
                                 .WithCleanSession(true)
                                 .Build();
 
             // Connect to MQTT broker
-            var connectResult = await mqttClient.ConnectAsync(options);
             var topicFilter = new MqttTopicFilterBuilder()
-                                    .WithTopic("iotgateway")
-                                    .Build();
-            if (connectResult.ResultCode == MqttClientConnectResultCode.Success)
+                                                    .WithTopic("iotgateway")
+                                                    .Build();
+            while (mqttClient.IsConnected == false)
             {
-                Console.WriteLine("Service connect to Broker");
-            }
-            try
-            {
-                await mqttClient.SubscribeAsync(topicFilter);
-                Console.WriteLine("Subscribe to " + topicFilter.Topic + " successful");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error during connection because of {ex.Message}");
-            }
+                try
+                {
+                    var connectResult = await mqttClient.ConnectAsync(options);
 
+                    if (connectResult.ResultCode == MqttClientConnectResultCode.Success)
+                    {
+                        Console.WriteLine("Service connect to Broker");
+                    }
+
+                    await mqttClient.SubscribeAsync(topicFilter);
+                    Console.WriteLine("Subscribe to " + topicFilter.Topic + " successful");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during connection due to {ex.Message}");
+                }
+
+            }
+            
             mqttClient.DisconnectedAsync += async e => {
                 Console.WriteLine("Disconnected from MQTT broker.");
                 await Task.Delay(5);
@@ -69,24 +75,35 @@ namespace skview_kepware_influx_service.MqttFiles
             mqttClient.ApplicationMessageReceivedAsync += e => {
                 msgFromMQTTBroker = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
                 msgTopic = e.ApplicationMessage.Topic;
-                JObject json = JObject.Parse(msgFromMQTTBroker);
+                JObject jsonMsg = JObject.Parse(msgFromMQTTBroker);
+                var jsonMsgValue = jsonMsg["values"];
+                foreach (var item in jsonMsgValue)
+                {
+                    Console.WriteLine($"El dispositivo es {item["id"]}");
+                    Console.WriteLine($"la calida de señal  es {item["q"]}");
+                    Console.WriteLine($"el valor es {item["v"]}");
+                    Console.WriteLine($"La fecha es {item["t"]}");
+                    Console.WriteLine("=====");
+                }
+                Console.WriteLine("===== FIN DE PAYLOAD =====");
                 Console.WriteLine($"Received message on topic {msgTopic}");
 
-                long msgTime = Convert.ToInt64(json.GetValue("timestamp"));
+                long msgTime = Convert.ToInt64(jsonMsg.GetValue("timestamp"));
                 if (msgTime != 0)
                 {
                     DateTime TimeSt_get = DateTimeOffset.FromUnixTimeMilliseconds(msgTime).DateTime.ToLocalTime();
-                    Console.WriteLine(TimeSt_get.ToShortTimeString().ToString());
-                    json["timestamp"] = TimeSt_get;
+                    //Console.WriteLine(TimeSt_get.ToShortTimeString().ToString());
+                       
                 }
                 using (var sw = new StreamWriter(Directory.GetCurrentDirectory() + @"\MqttFiles\Files\test1.txt"))
                 {
                     Task.Delay(1000);
-                    sw.WriteLineAsync(json.ToString());
+                    sw.WriteLineAsync(jsonMsg.ToString());
                 }
-                Console.WriteLine(json.ToString());
+                //Console.WriteLine(json.ToString());
                 return Task.CompletedTask;
             };
+
         }
     }
 }
